@@ -13,7 +13,8 @@ public typealias CollectionItemSelectionHandlerType = (IndexPath) -> Void
 open class CollectionDataSource<Provider: CollectionDataProvider, Cell: UICollectionViewCell>:
     NSObject,
     UICollectionViewDataSource,
-    UICollectionViewDelegate
+    UICollectionViewDelegate,
+    UICollectionViewDelegateFlowLayout
     where Cell: ConfigurableCell, Provider.T == Cell.T
 {
     // MARK: - Delegates
@@ -21,10 +22,12 @@ open class CollectionDataSource<Provider: CollectionDataProvider, Cell: UICollec
 
     // MARK: - Private Properties
     let provider: Provider
-    let collectionView: UICollectionView
+    let collectionView: SlickCollection
+    var selectedIndexPaths = Set<IndexPath>()
+    var hiddenIndexPaths: [IndexPath] = []
 
     // MARK: - Lifecycle
-    init(collectionView: UICollectionView, provider: Provider) {
+    init(collectionView: SlickCollection, provider: Provider) {
         self.collectionView = collectionView
         self.provider = provider
         super.init()
@@ -54,20 +57,82 @@ open class CollectionDataSource<Provider: CollectionDataProvider, Cell: UICollec
         }
         let item = provider.item(at: indexPath)
         if let item = item {
-            cell.configure(item, at: indexPath)
+            let state: CellState = cellIsExpanded(at: indexPath) ? .expanded : .collapsed
+            cell.configure(item, at: indexPath, delegate: self, state: state)
         }
         return cell
     }
+    // MARK: - UICollectionViewDelegateFlowLayout
 
-    open func collectionView(_ collectionView: UICollectionView,
-        viewForSupplementaryElementOfKind kind: String,
-        at indexPath: IndexPath) -> UICollectionReusableView
-    {
-        return UICollectionReusableView(frame: CGRect.zero)
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+        return 5
     }
 
-    // MARK: - UICollectionViewDelegate
-    public func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        collectionItemSelectionHandler?(indexPath)
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if let collectionView = collectionView as? SlickCollection {
+            let edgePadding: CGFloat = 20.0
+            let width = collectionView.parentView.frame.width - (edgePadding * 2)
+            if cellIsExpanded(at: indexPath) {
+                return CGSize(width: width, height: SlickCell.expandedHeight)
+            } else {
+                return CGSize(width: width, height: SlickCell.collapsedHeight)
+            }
+        }
+        return CGSize.zero
+    }
+
+    public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
+        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+    }
+}
+
+extension CollectionDataSource: CellInteractable {
+    // Tap events are restricted to the top view so users can select the expanded view
+    public func didTapTopView(cell: SlickCell) {
+        if cell.state == .expanded {
+            removeExpandedIndexPath(cell.indexPath)
+            resizeCells(intiatedBy: cell, newState: .collapsed)
+            self.unfocus()
+        } else {
+            addExpandedIndexPath(cell.indexPath)
+            focusOn(cellWith: cell.indexPath)
+            resizeCells(intiatedBy: cell, newState: .expanded)
+        }
+    }
+
+    func focusOn(cellWith indexPath: IndexPath) {
+        let hideable = collectionView.indexPathsForVisibleItems.filter({ $0 != indexPath })
+            hideable.forEach({ self.collectionView.cellForItem(at: $0)?.isHidden = true
+        })
+        hiddenIndexPaths = hideable
+    }
+
+    func unfocus() {
+        hiddenIndexPaths.forEach({ self.collectionView.cellForItem(at: $0)?.isHidden = false })
+        hiddenIndexPaths = []
+    }
+
+    func resizeCells(intiatedBy cell: SlickCell, newState: CellState) {
+        let duration = 0.3
+        UIView.transition(with: collectionView, duration: duration, options: .curveEaseIn, animations: {
+            self.collectionView.performBatchUpdates({
+                self.collectionView.reloadData()
+            })
+        }) { (finished) in
+            cell.state = newState
+        }
+
+    }
+
+    fileprivate func cellIsExpanded(at IndexPath: IndexPath) -> Bool {
+        return selectedIndexPaths.contains(IndexPath)
+    }
+
+    func addExpandedIndexPath(_ indexPath: IndexPath) {
+        selectedIndexPaths.insert(indexPath)
+    }
+
+    func removeExpandedIndexPath(_ indexPath: IndexPath) {
+        selectedIndexPaths.remove(indexPath)
     }
 }

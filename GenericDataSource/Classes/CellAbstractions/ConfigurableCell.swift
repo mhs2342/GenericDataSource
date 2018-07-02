@@ -8,8 +8,12 @@
 
 import UIKit
 
+public protocol CellInteractable {
+    func didTapTopView(cell: SlickCell)
+}
+
 public protocol ConfigurableCell: ReusableCell {
     associatedtype T
 
-    func configure(_ item: T, at indexPath: IndexPath)
+    func configure(_ item: T, at indexPath: IndexPath, delegate: CellInteractable, state: CellState)
 }
