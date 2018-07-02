@@ -111,9 +111,10 @@ You can call your collectionview cell whatever you like as long as it is a subcl
 
 The configure handler gets called by the `collectionView(_ collectionView: UICollectionView,
          cellForItemAt indexPath: IndexPath)` delegate method and does the work to 
+
+ 1. Get a view model from your data source
+ 2. Take that view model and drop it into your cell. 
          
-         1. Get a view model from your data source
-         2. Take that view model and drop it into your cell. 
 Your custom cell is the one responsible for actually coordinating what goes where.
 
 
