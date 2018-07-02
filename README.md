@@ -74,7 +74,7 @@ extension ViewController {
 
 ```
 
-
+All we are saying here is that the data source `DemoDataSource` knows about two kinds of things, a view model, which you define, and your slick cell that your registered with the collection view.
 
 ## Setting up your Custom SlickCollection cell
 ### Create a new File
@@ -107,10 +107,11 @@ class DemoCell: SlickCell, ConfigurableCell {
 ```
 You can call your collectionview cell whatever you like as long as it is a subclass of `SlickCell` and conforms to the `ConfigurableCell` protocol.
 
-All we are saying here is that the data source `DemoDataSource` knows about two kinds of things, a view model, which you define, and your collection view cell that your registered with the collection view.
+
 
 The configure handler gets called by the `collectionView(_ collectionView: UICollectionView,
          cellForItemAt indexPath: IndexPath)` delegate method and does the work to 
+         
          1. Get a view model from your data source
          2. Take that view model and drop it into your cell. 
 Your custom cell is the one responsible for actually coordinating what goes where.
@@ -122,7 +123,7 @@ If you like SlickCollection and want to make it better, be my guest! Feel free t
 
 ## Authors
 
-* **Matt Sanford** - *Initial work* - [PurpleBooth](https://github.com/PurpleBooth)
+* **Matt Sanford** - *Initial work*
 
 
 ## License
