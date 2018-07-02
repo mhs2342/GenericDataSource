@@ -81,7 +81,7 @@
 		AF1F50EA1EB363700033E66E = {
 			isa = PBXGroup;
 			children = (
-				AF1F50F61EB363700033E66E /* GenericDataSource */,
+				AF1F50F61EB363700033E66E /* SlickCollectionView */,
 				C9FC91A020E9980D0093B814 /* SlickDemo */,
 				AF1F50F51EB363700033E66E /* Products */,
 				C97344BC20E99B5100DA66C3 /* Frameworks */,
@@ -97,14 +97,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		AF1F50F61EB363700033E66E /* GenericDataSource */ = {
+		AF1F50F61EB363700033E66E /* SlickCollectionView */ = {
 			isa = PBXGroup;
 			children = (
 				AF1F510E1EB363900033E66E /* Classes */,
 				AF1F50F71EB363700033E66E /* GenericDataSource.h */,
 				AF1F50F81EB363700033E66E /* Info.plist */,
 			);
-			path = GenericDataSource;
+			path = SlickCollectionView;
 			sourceTree = "<group>";
 		};
 		AF1F510E1EB363900033E66E /* Classes */ = {
