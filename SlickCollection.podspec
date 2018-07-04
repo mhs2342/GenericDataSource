@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SlickCollection"
-  s.version      = "0.0.1"
+  s.version      = "0.0.2"
   s.summary      = "Short little framework to animate collectionview cells with a hidden drawer."
   s.swift_version = "4.1"
 
@@ -40,7 +40,7 @@ An easy way to create animated collectionview cells to show and hide content upo
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  s.license      = { :type => "MIT", :file => "LICENSE" }
+  s.license      = { :type => "MIT", :file => "LICENSE.md" }
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #

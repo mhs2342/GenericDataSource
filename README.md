@@ -10,7 +10,6 @@ You are going to need Cocoapods.
 
 ```
 $ sudo gem install cocoapods
-
 ```
 
 ### Installing
@@ -32,7 +31,7 @@ Once you get the framework all buttoned up, you need to be sure to add the frame
 
 At the top of whatever view controller you are using, just import the framework 
 ```
-import SlickCollection
+import SlickCollectionView
 ```
 and you're ready to go! 
 
@@ -88,26 +87,44 @@ Now you should have a new .xib file and swift file.
 ### This part is a little tricky
 The .xib is fairly straightforward, a stackview with a top and bottom view. I would recommend looking at, if not directly using the DemoCell.xib file here. Once you get the view laid out, you want to create outlets for them.
 
-SlickCollection has no idea about your xib at the moment, so what you need to do is open the Assitant Editor, with Interface Builder on one side, and `SlickCell.swift` on the other. Since your Custom cell is a subclass of SlickCell, this is a totally legal move and makes sense. you want to create outlets for those that you see in `SlickCell.swift`. If you change the names, `it will not work` unless you change the names everywhere else so be careful.
-
-The last step is take your auxillary views inside that xib, like images, labels, etc. and place those inside your newly created swift file as that is where your view model will be placed.
+SlickCollection has no idea about your xib at the moment, so what you need to do is set the needed properties of `SlickCell` inside your custom cell in the `awakeFromNib` function. 
 
 ### DemoCell
 ```
 class DemoCell: SlickCell, ConfigurableCell {
+	// These will be used to connect SlickCell and your Cell
+	@IBOutlet weak var top: UIView!
+    @IBOutlet weak var bottom: UIView!
+    @IBOutlet weak var stack: UIStackView!
 	// any other outlets you like 
     @IBOutlet weak var title: UILabel!
+
+    override func awakeFromNib() {
+        super.stackView = stack
+        super.bottomView = bottom
+        super.topView = top
+        setup()
+    }
 
     func configure(_ item: DemoViewModel, at indexPath: IndexPath, delegate: CellInteractable, state: CellState) {
         self.title.text = item.title
         self.delegate = delegate
         self.indexPath = indexPath
     }
+
+    @objc private func tapped() {
+        delegate?.didTapTopView(cell: self)
+    }
+
+    private func setup() {
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
+        topView.addGestureRecognizer(gestureRecognizer)
+    }
 }
 ```
 You can call your collectionview cell whatever you like as long as it is a subclass of `SlickCell` and conforms to the `ConfigurableCell` protocol.
 
-
+The last thing you need to do is create a gesture recognizer on the top view of your cell and implement the handler which calls delegate. This will is what triggers the opening and closing effect of the cell.
 
 The configure handler gets called by the `collectionView(_ collectionView: UICollectionView,
          cellForItemAt indexPath: IndexPath)` delegate method and does the work to 

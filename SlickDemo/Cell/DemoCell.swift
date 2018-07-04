@@ -11,6 +11,7 @@ import UIKit
 import SlickCollectionView
 
 class DemoCell: SlickCell, ConfigurableCell {
+    // Necessary for Slick Cell
     @IBOutlet weak var top: UIView!
     @IBOutlet weak var bottom: UIView!
     @IBOutlet weak var stack: UIStackView!
