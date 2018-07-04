@@ -22,6 +22,8 @@ class DemoCell: SlickCell, ConfigurableCell {
         super.stackView = stack
         super.bottomView = bottom
         super.topView = top
+         SlickCell.collapsedHeight = 120
+         SlickCell.exapndedHeight = 270
         setup()
     }
     // MARK: - ConfigurableCell

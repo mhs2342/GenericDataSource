@@ -73,7 +73,7 @@ open class CollectionDataSource<Provider: CollectionDataProvider, Cell: UICollec
             let edgePadding: CGFloat = 20.0
             let width = collectionView.parentView.frame.width - (edgePadding * 2)
             if cellIsExpanded(at: indexPath) {
-                return CGSize(width: width, height: SlickCell.expandedHeight)
+                return CGSize(width: width, height: SlickCell.exapndedHeight)
             } else {
                 return CGSize(width: width, height: SlickCell.collapsedHeight)
             }
