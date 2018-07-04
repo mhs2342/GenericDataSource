@@ -70,9 +70,12 @@
             <viewLayoutGuide key="safeArea" id="ZTg-uK-7eu"/>
             <size key="customSize" width="519" height="346"/>
             <connections>
+                <outlet property="bottom" destination="7gV-W8-vFv" id="N8y-nE-1Rr"/>
                 <outlet property="bottomView" destination="7gV-W8-vFv" id="MpM-zd-BTN"/>
+                <outlet property="stack" destination="LpW-cA-2cM" id="eDL-ZS-aaH"/>
                 <outlet property="stackView" destination="LpW-cA-2cM" id="KHq-Gh-KwG"/>
                 <outlet property="title" destination="8Rb-Kh-n9d" id="cMy-fZ-DcY"/>
+                <outlet property="top" destination="TO9-Rb-vBv" id="ber-5k-Bzm"/>
                 <outlet property="topView" destination="TO9-Rb-vBv" id="Tk3-t4-LRU"/>
             </connections>
             <point key="canvasLocation" x="51.5" y="-37"/>

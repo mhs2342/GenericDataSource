@@ -10,10 +10,9 @@ import Foundation
 import UIKit
 
 open class SlickCell: UICollectionViewCell {
-    @IBOutlet weak var stackView: UIStackView!
-
-    @IBOutlet weak var bottomView: UIView!
-    @IBOutlet weak var topView: UIView!
+    @objc open var stackView: UIStackView!
+    @objc open var bottomView: UIView!
+    @objc open var topView: UIView!
 
     public var delegate: CellInteractable?
     public var indexPath: IndexPath!
@@ -27,12 +26,6 @@ open class SlickCell: UICollectionViewCell {
         }
     }
 
-    override open func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-        setup()
-    }
-
     func toggle() {
         stackView.spacing = isCollapsed() ? 0 : 15
         stackView.arrangedSubviews[expandedViewIndex].isHidden = isCollapsed()
@@ -40,15 +33,6 @@ open class SlickCell: UICollectionViewCell {
 
     private func isCollapsed() -> Bool {
         return state == .collapsed
-    }
-
-    @objc private func tapped() {
-        delegate?.didTapTopView(cell: self)
-    }
-
-    private func setup() {
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(tapped))
-        topView.addGestureRecognizer(gestureRecognizer)
     }
 
 }

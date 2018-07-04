@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import GenericDataSource
+import SlickCollectionView
 
 class ViewController: UIViewController {
     var collectionView: SlickCollection!
