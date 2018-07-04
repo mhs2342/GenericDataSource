@@ -89,6 +89,16 @@ Now you should have a new .xib file and swift file.
 ### This part is a little tricky
 The .xib is fairly straightforward, a stackview with a top and bottom view. I would recommend looking at, if not directly using the DemoCell.xib file here. Once you get the view laid out, you want to create outlets for them.
 
+### Constraints
+In order for the magic to happen you just need to apply 2 constraints to your stack view. 
+  
+1. The `topView` must have a height constraint with priority 999
+2. The `bottomView` must have a height constraint of `<=` with priority 1000. 
+
+Then just make sure that if your expanded and collapsed heights are anything other than `90` and `150` respectively, you set those properties somewhere before the delegate methods are called.
+
+The reason this is, is because when the cells are loaded we want the top view only to be visible with a "rigid" height, and the bottom view to be 0. When they are tapped however we want the bottom view to expand, which causes a conflict with the top view height _unless_ we have set the priorty correctly so the autolayout engine will say "hey this bottom view constraint is more important right now so I am going to listen to it."
+
 SlickCollection has no idea about your xib at the moment, so what you need to do is set the needed properties of `SlickCell` inside your custom cell in the `awakeFromNib` function. 
 
 ### DemoCell
@@ -105,6 +115,8 @@ class DemoCell: SlickCell, ConfigurableCell {
         super.stackView = stack
         super.bottomView = bottom
         super.topView = top
+        // SlickCell.expandedHeight = topViewHeight + bottomViewHeight
+        // SlickCell.collapsedHeight = topViewHeight
         setup()
     }
 
