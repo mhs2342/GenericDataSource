@@ -2,6 +2,8 @@
 
 Short little framework to animate collectionview cells with a hidden drawer. 
 
+![Demo](https://github.com/mhs2342/SlickCollectionView/blob/master/Slick.gif)
+
 ## Getting Started
 
 ### Prerequisites
