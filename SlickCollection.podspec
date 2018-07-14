@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "SlickCollection"
-  s.version      = "0.0.2"
+  s.version      = "0.0.4"
   s.summary      = "Short little framework to animate collectionview cells with a hidden drawer."
   s.swift_version = "4.1"
 
@@ -65,7 +65,7 @@ An easy way to create animated collectionview cells to show and hide content upo
   #
 
   # s.platform     = :ios
-    s.platform     = :ios, "11.0"
+    s.platform     = :ios, "10.0"
 
   #  When using multiple platforms
   # s.ios.deployment_target = "5.0"
