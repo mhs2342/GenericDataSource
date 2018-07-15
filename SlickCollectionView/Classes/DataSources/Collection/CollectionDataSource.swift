@@ -70,8 +70,7 @@ open class CollectionDataSource<Provider: CollectionDataProvider, Cell: UICollec
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         if let collectionView = collectionView as? SlickCollection {
-            let edgePadding: CGFloat = 20.0
-            let width = collectionView.parentView.frame.width - (edgePadding * 2)
+            let width = collectionView.parentView.frame.width - (SlickCollection.horizontalEdgeInset * 2)
             if cellIsExpanded(at: indexPath) {
                 return CGSize(width: width, height: SlickCell.exapndedHeight)
             } else {
@@ -82,7 +81,10 @@ open class CollectionDataSource<Provider: CollectionDataProvider, Cell: UICollec
     }
 
     public func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, insetForSectionAt section: Int) -> UIEdgeInsets {
-        return UIEdgeInsets(top: 10, left: 10, bottom: 10, right: 10)
+        return UIEdgeInsets(top: SlickCollection.verticalEdgeInset,
+                            left: SlickCollection.horizontalEdgeInset,
+                            bottom: SlickCollection.verticalEdgeInset,
+                            right: SlickCollection.horizontalEdgeInset)
     }
 }
 

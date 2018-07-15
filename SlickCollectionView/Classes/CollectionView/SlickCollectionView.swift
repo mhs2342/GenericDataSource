@@ -12,6 +12,8 @@ import UIKit
 public class SlickCollection: UICollectionView {
     var parentView: UIView
     var reuseIdentifier: String
+    open static var horizontalEdgeInset: CGFloat = 10
+    open static var verticalEdgeInset: CGFloat = 10
 
     public init(frame: CGRect = .zero, parent: UIView, reuseIdentifier: String) {
         self.parentView = parent
