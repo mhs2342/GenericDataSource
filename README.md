@@ -1,10 +1,15 @@
 # SlickCollectionView
-
 Short little framework to animate collectionview cells with a hidden drawer. 
 
-![Demo](https://github.com/mhs2342/SlickCollectionView/blob/master/Slick.gif)
+## What's new in version 0.0.5
+Exposed the `SlickCollection.horizontalEdgeInset` and 'SlickCollection.verticalEdgeInset' property to allow clients to specify the collectionView insets for sections. The default is `10`.
+
+
+
+
 
 ## Getting Started
+![Demo](https://github.com/mhs2342/SlickCollectionView/blob/master/Slick.gif)
 
 ### Prerequisites
 
